@@ -45,8 +45,19 @@ def find_incidence(input, pattern):
             count += 1
         i += 1
     return count
+    
+def reverse_dna(input):
+    genome = {'a':'t', 'c':'g','t':'a', 'g':'c'}
+    output = ''
+    for c in input[::-1]:
+        output += genome[c]
+    return output
 
 def main():
+    input = sys.argv[1]
+    print reverse_dna(input)
+    
+def hidden_message():
     if len(sys.argv) > 3:
         print 'Expected usage: hidden_message.py <input> <optional-n>'
         exit()
