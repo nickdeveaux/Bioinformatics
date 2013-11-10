@@ -28,7 +28,7 @@ def find_most_common_kmer(input, k):
     most_common_count = 0
     for i in range(0, len(input)-k):
         pattern = input[i:i+k]
-        count = find_incidence(input, pattern);
+        count, indices = find_incidence(input, pattern)
         if count > most_common_count:
             most_common_count = count
             most_common_strings=Set([pattern])
@@ -39,23 +39,28 @@ def find_most_common_kmer(input, k):
 def find_incidence(input, pattern):
     i = 0
     count = 0
+    indices = []
     ##import pdb; pdb.set_trace()
     while ( i + len(pattern) <= len(input)):
         if input[i:i+len(pattern)] == pattern:
+            indices.append(i)
             count += 1
         i += 1
-    return count
+    return count, indices
     
 def reverse_dna(input):
+    input = input.lower()
     genome = {'a':'t', 'c':'g','t':'a', 'g':'c'}
     output = ''
     for c in input[::-1]:
         output += genome[c]
-    return output
+    return output.upper()
 
 def main():
     input = sys.argv[1]
-    print reverse_dna(input)
+    pattern = sys.argv[2]
+    count, indices = find_incidence(input, pattern);
+    print indices(input, pattern)
     
 def hidden_message():
     if len(sys.argv) > 3:
