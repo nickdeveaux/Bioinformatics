@@ -10,7 +10,8 @@ Created by Nick DeVeaux on 2013-11-08.
 import sys
 import os
 from sets import Set
-import fileinput    
+import fileinput  
+import utils  
 
 def find_most_common_substring(input):
     most_common_string = []
@@ -61,16 +62,10 @@ def main():
     args = []
     for line in fileinput.input():
         args.append(line.rstrip())
-    input = args[2]
-    pattern = args[1]
+    input = args[1]
+    pattern = args[0]
     count, indices = find_incidence(input, pattern);
-    print_array(indices)
-    
-def print_array(array):
-    output = ''
-    for a in array:
-        output += str(a) + ' '
-    print output
+    utils.print_array(indices)
 
 if __name__ == '__main__':
 	main()
