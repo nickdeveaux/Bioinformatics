@@ -63,6 +63,9 @@ def main():
     print indices(input, pattern)
     
 def hidden_message():
+    import fileinput
+    for line in fileinput.input():
+        print line
     if len(sys.argv) > 3:
         print 'Expected usage: hidden_message.py <input> <optional-n>'
         exit()
