@@ -8,6 +8,13 @@ Created by Nick DeVeaux on 2013-11-13.
 Clump Finding Problem: Find patterns forming clumps in a string.
      Input: A string Genome, and integers k, L, and t.
      Output: All distinct k-mers forming (L, t)-clumps in Genome.
+     
+     Sample Input:
+          CGGACTCGACAGATGTGAAGAACGACAATGTGAAGACTCGACACGACAGAGTGAAGAGAAGAGGAAACATTGTAA
+          5 50 4
+
+     Sample Output:
+          CGACA GAAGA
 """
 
 import sys
