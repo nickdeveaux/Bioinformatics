@@ -10,6 +10,7 @@ Created by Nick DeVeaux on 2013-11-08.
 import sys
 import os
 from sets import Set
+import fileinput    
 
 def find_most_common_substring(input):
     most_common_string = []
@@ -57,30 +58,19 @@ def reverse_dna(input):
     return output.upper()
 
 def main():
-    input = sys.argv[1]
-    pattern = sys.argv[2]
-    count, indices = find_incidence(input, pattern);
-    print indices(input, pattern)
-    
-def hidden_message():
-    import fileinput
+    args = []
     for line in fileinput.input():
-        print line
-    if len(sys.argv) > 3:
-        print 'Expected usage: hidden_message.py <input> <optional-n>'
-        exit()
-    input = sys.argv[1]
-    if len(sys.argv) == 3:
-        k= int(sys.argv[2])
-        print input
-        print k
-        most_common_strings, count= find_most_common_kmer(input, k)
-        output = ''
-        for s in most_common_strings:
-            output += s + ' '
-        print output
-    if len(sys.argv)==2:
-        print find_most_common_substring(input)
+        args.append(line.rstrip())
+    input = args[2]
+    pattern = args[1]
+    count, indices = find_incidence(input, pattern);
+    print_array(indices)
+    
+def print_array(array):
+    output = ''
+    for a in array:
+        output += str(a) + ' '
+    print output
 
 if __name__ == '__main__':
 	main()
