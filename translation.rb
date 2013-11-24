@@ -1,16 +1,10 @@
 #!/usr/bin/ruby
 
-require 'readline'
+require_relative 'utils'
 
 inp = ARGV[0]
 puts inp
-file = File.new("RNA_codon_table_1.txt", "r")
-protein_dict = {}
-while (line = file.gets)
-	elems = line.split(' ')
-	protein_dict[elems[0]] = elems[1]
-end
-file.close
+protein_dict = protein_dict_from_file
 
 codons = inp.scan(/.{3}/)
 result = ""
