@@ -15,7 +15,5 @@ require_relative 'utils'
 
 inp = ARGV[0]
 pattern = ARGV[1]
-protein_dict = protein_dict_from_file
+print peptide_to_codon_dict
 
-puts inp
-print find_incidence(inp, pattern)

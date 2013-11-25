@@ -4,7 +4,7 @@ require_relative 'utils'
 
 inp = ARGV[0]
 puts inp
-protein_dict = protein_dict_from_file
+protein_dict = codon_to_peptide_dict
 
 codons = inp.scan(/.{3}/)
 result = ""

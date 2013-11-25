@@ -2,12 +2,27 @@
 
 require 'readline'
 
-def protein_dict_from_file
+def codon_to_peptide_dict
 	file = File.new("RNA_codon_table_1.txt", "r")
 	protein_dict = {}
 	while (line = file.gets)
 		elems = line.split(' ')
 		protein_dict[elems[0]] = elems[1]
+	end
+	file.close
+	return protein_dict
+end
+
+def peptide_to_codon_dict
+	file = File.new("RNA_codon_table_1.txt", "r")
+	protein_dict = {}
+	while (line = file.gets)
+		elems = line.split(' ')
+		if protein_dict[elems[1]]
+			protein_dict[elems[1]] = protein_dict[elems[1]].push(elems[0])
+		else
+			protein_dict[elems[1]] = [elems[0]]
+		end
 	end
 	file.close
 	return protein_dict
