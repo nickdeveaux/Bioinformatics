@@ -13,35 +13,45 @@ Peptide Encoding Problem: Find substrings of a genome encoding a given amino aci
 
 require_relative 'utils'
 
-inp = ARGV[0]
-peptide = ARGV[1]
-pep_dict =  peptide_to_codon_dict
-
-possible_translations = []
-peptide.each_char { |amino_acid|
-    temp =  possible_translations
-    possible_translations = []
-    if temp.empty?
-    	pep_dict[amino_acid].each{ |comb|
-	    	possible_translations << comb
-	    }
-    else
-	temp.each { |string|
-	    pep_dict[amino_acid].each{ |comb|
-	    	possible_translations << string + comb
-	    }
-	}
-	end
-}
-possible_translations.each { |pattern|
-    pattern.gsub!("U", "T")
-    [pattern, reverse_complement(pattern)].each{ |p| 
-		count, indices = find_incidence(inp, p)
-		if count > 0
-			indices.each {
-				puts p
-			}
+def all_possible_dna_translations(peptide)
+	possible_translations = []
+	pep_dict =  peptide_to_codon_dict
+	peptide.each_char { |amino_acid|
+	    temp =  possible_translations
+	    possible_translations = []
+	    if temp.empty?
+	    	pep_dict[amino_acid].each{ |combo|
+		    	possible_translations << combo
+		    }
+	    else
+		temp.each { |string|
+		    pep_dict[amino_acid].each{ |combo|
+		    	possible_translations << string + combo
+		    }
+		}
 		end
 	}
-}
+	return possible_translations
+end
 
+def all_incidences_of_pattern_in_dna(dna, patterns)
+	output = []
+	patterns.each { |pattern|
+	    pattern.gsub!("U", "T")
+	    [pattern, reverse_complement(pattern)].each{ |p| 
+			count, indices = find_incidence(dna, p)
+			if count > 0
+				indices.each {
+					output << p
+				}
+			end
+		}
+	}
+	return output
+end
+
+# main
+dna = ARGV[0]
+peptide = ARGV[1]
+translations = all_possible_dna_translations(peptide)
+puts all_incidences_of_pattern_in_dna(dna, translations)
