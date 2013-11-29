@@ -2,8 +2,10 @@
 
 require 'readline'
 
+$codon_amino_acid_encoding_file = "RNA_codon_table_1.txt"
+
 def codon_to_peptide_dict
-	file = File.new("RNA_codon_table_1.txt", "r")
+	file = File.new($codon_amino_acid_encoding_file, "r")
 	protein_dict = {}
 	while (line = file.gets)
 		elems = line.split(' ')
@@ -14,7 +16,7 @@ def codon_to_peptide_dict
 end
 
 def peptide_to_codon_dict
-	file = File.new("RNA_codon_table_1.txt", "r")
+	file = File.new($codon_amino_acid_encoding_file, "r")
 	protein_dict = {}
 	while (line = file.gets)
 		elems = line.split(' ')
@@ -31,11 +33,23 @@ end
 def find_incidence(input, pattern)
 	count = 0
 	i = 0
+	indices = []
 	while(i + pattern.length <= input.length)
 		if input[i, pattern.length] == pattern
 			count += 1
+			indices.push(i)
 		end
 		i += 1
 	end
-	return count
+	return count, indices
+end
+
+def reverse_complement(input)
+    input = input.downcase
+    genome = {'a' => 't', 'c' =>'g','t'=>'a', 'g'=>'c'}
+    output = ''
+    input.reverse.each_char do |c|
+        output += genome[c]
+    end
+    return output.upcase!
 end
