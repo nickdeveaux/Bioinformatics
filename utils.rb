@@ -5,11 +5,8 @@ require 'readline'
 $codon_amino_acid_encoding_file = "RNA_codon_table_1.txt"
 
 def string_from_file(filename)
-	file = File.open(filename, "r")
-	output = ''
-	file.each {|line|
-		output += line
-	}
+	file = File.open(filename, "rb")
+	output = file.read
 	file.close
 	return output
 end
