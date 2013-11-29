@@ -51,7 +51,14 @@ def all_incidences_of_pattern_in_dna(dna, patterns)
 end
 
 # main
-dna = ARGV[0]
-peptide = ARGV[1]
+if ARGV[0] == "--file"
+    filename = ARGV[1]
+    dna = string_from_file(filename)
+	peptide = ARGV[2]
+    puts filename
+else
+	dna = ARGV[0]
+	peptide = ARGV[1]
+end
 translations = all_possible_dna_translations(peptide)
 puts all_incidences_of_pattern_in_dna(dna, translations)

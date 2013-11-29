@@ -4,6 +4,16 @@ require 'readline'
 
 $codon_amino_acid_encoding_file = "RNA_codon_table_1.txt"
 
+def string_from_file(filename)
+	file = File.open(filename, "r")
+	output = ''
+	file.each {|line|
+		output += line
+	}
+	file.close
+	return output
+end
+
 def codon_to_peptide_dict
 	file = File.new($codon_amino_acid_encoding_file, "r")
 	protein_dict = {}
