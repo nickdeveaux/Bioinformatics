@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+# encoding: utf-8
+"""
+
+Created by Nick DeVeaux on 2014-08-07.
+
+to run: python counting_nucleotides.py < dna.txt
+
+Sample Dataset
+
+AGCTTTTCATTCTGACTGCAACGGGCAATATGTCTCTGTGTGGATTAAAAAAAGAGTGTCTGATAGCAGC
+Sample Output
+
+20 12 17 21
+
+"""
+
 
 import sys
 import os
