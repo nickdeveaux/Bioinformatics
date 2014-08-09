@@ -6,7 +6,7 @@ Created by Nick DeVeaux on 2014-08-07.
 
 """
 
-from .. import utils  
+import utils
 import fileinput
 
 def main():
