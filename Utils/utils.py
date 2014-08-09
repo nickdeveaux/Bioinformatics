@@ -12,3 +12,10 @@ def print_array(array):
         output += str(a) + ' '
     print output
 
+def reverse_dna(input):
+    input = input.lower()
+    genome = {'a':'t', 'c':'g','t':'a', 'g':'c'}
+    output = ''
+    for c in input[::-1]:
+        output += genome[c]
+    return output.upper()

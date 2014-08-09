@@ -50,13 +50,6 @@ def find_incidence(input, pattern):
         i += 1
     return count, indices
     
-def reverse_dna(input):
-    input = input.lower()
-    genome = {'a':'t', 'c':'g','t':'a', 'g':'c'}
-    output = ''
-    for c in input[::-1]:
-        output += genome[c]
-    return output.upper()
 
 def main():
     args = []
