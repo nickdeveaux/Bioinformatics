@@ -4,6 +4,9 @@
 
 Created by Nick DeVeaux on 2014-08-07.
 
+Given two strings s and t of equal length, the Hamming distance between s and t,
+denoted dH(s,t), is the number of corresponding symbols that differ in s and t.
+
 """
 
 import utils
@@ -11,9 +14,9 @@ import fileinput
 
 def hamming_distance(a, b):
 	distance = 0
-	for i in range (a.len()):
+	for i in range (len(a)):
 		if a[i] != b[i]:
-			distance++
+			distance += 1
 	return distance
 
 
