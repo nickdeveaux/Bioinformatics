@@ -6,6 +6,7 @@ Created by Nick DeVeaux on 2013-11-13.
 """
 
 def fasta():
+	identifier = ''
 
 def parse(lines):
 	fastas = []
