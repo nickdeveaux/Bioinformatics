@@ -3,7 +3,6 @@
 require_relative 'utils'
 
 inp = ARGV[0]
-puts inp
 protein_dict = codon_to_peptide_dict
 
 codons = inp.scan(/.{3}/)

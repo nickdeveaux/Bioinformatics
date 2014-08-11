@@ -2,7 +2,7 @@
 
 require 'readline'
 
-$codon_amino_acid_encoding_file = "RNA_codon_table_1.txt"
+$codon_amino_acid_encoding_file = "../Data/RNA_codon_table_1.txt"
 
 def string_from_file(filename)
 	file = File.open(filename, "rb")
