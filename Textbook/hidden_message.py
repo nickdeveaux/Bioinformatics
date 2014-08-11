@@ -38,14 +38,15 @@ def find_most_common_kmer(input, k):
             most_common_strings.update([pattern])
     return most_common_strings,  most_common_count 
 
+# used to solve Finding a Motif in DNA Rosalind problem -ndv 08/12
 def find_incidence(input, pattern):
     i = 0
     count = 0
     indices = []
-    ##import pdb; pdb.set_trace()
     while ( i + len(pattern) <= len(input)):
         if input[i:i+len(pattern)] == pattern:
-            indices.append(i)
+            # add 1 to allow the indices to be human readable
+            indices.append(i+1)
             count += 1
         i += 1
     return count, indices
@@ -55,8 +56,8 @@ def main():
     args = []
     for line in fileinput.input():
         args.append(line.rstrip())
-    input = args[1]
-    pattern = args[0]
+    input = args[0]
+    pattern = args[1]
     count, indices = find_incidence(input, pattern);
     utils.print_array(indices)
 
