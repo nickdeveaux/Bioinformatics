@@ -30,13 +30,18 @@ def mortal_rabbits(n, m):
 		t += 1
 		dead = 0
 		if t-m > 0:
-			dead = born_rabbits[t-m] + born_rabbits[t-m - 1]
-		i = rabbits[t-1] + rabbits[t-2] - dead
+			dead = born_rabbits[t-m]
+		mature_rabbits = rabbits[t-1] - born_rabbits[t-1]
+		i = mature_rabbits * 2 + born_rabbits[t-1] - dead
 
 		# born (at time t) = diff from the last time, plus the number of dead
 		born_rabbits.insert(t, i - rabbits[t-1] + dead)
 		rabbits.insert(t, i)
+
+	print rabbits
+	print born_rabbits
 	return rabbits[n]
+
 	
 
 def main():
