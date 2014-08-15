@@ -5,19 +5,22 @@
 Created by Nick DeVeaux on 2013-11-13.
 """
 
-def fasta():
-	identifier = ''
+class fasta:
+	def __init__(self, id):
+		self.identifier = id
+		self.content = ''
+
+	def __str__(self):
+		return self.identifier + ' ' + self.content
 
 def parse(lines):
 	fastas = []
 	for line in lines:
 		if len(line) > 0:
 			if line[0] == '>':
-				f = fasta()
-				f.identifier = line[1:]
-				f.content = ''
+				f = fasta(line[1:])
 				fastas.append(f)
 			else:
-				f.content += line
+				fastas[-1].content += line
 	return fastas
 
