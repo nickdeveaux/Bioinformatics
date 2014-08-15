@@ -25,7 +25,6 @@ def probability_recessive(k, m, n):
 	homozygous_homozygous_matings = (n / pop) * ((n - 1) / (pop - 1))
 	homozygous_heterozygous_matings = (n / pop) * (m / (pop - 1)) + (m / pop) * (n / (pop - 1))
 	heterozygous_heterozygous_matings = (m / pop) * ((m - 1) / (pop - 1)) 
-	import pdb; pdb.set_trace()
 	probability_recessive = homozygous_homozygous_matings + .5 * homozygous_heterozygous_matings + .25 * heterozygous_heterozygous_matings
 	return probability_recessive
 
