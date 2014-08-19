@@ -26,28 +26,52 @@ import fasta
 from sets import Set
 import fileinput
 
+MINIMUM_CHARS = 1
+
 def get_common_substrings(a, b):
 	common_substrings = Set()
+	match_length_matrix = {}
 	for i in range(len(a)):
 		current_match = ''
 		# hold on to the temporary index increment from the comparer char	
-		j = 0   
-		for y in b:
-			if (j + i >= len(a)):
+		cursor = 0   
+		for j in range(len(b)):
+			match_length_matrix[(i,j)] = 0
+			if (cursor + i >= len(a)):
 				break
-			x = a[j + i]
+			x = a[i + cursor]
+			y = b[j]
 			if x == y:
 				current_match += y
-				j += 1
+				cursor += 1
 			else:
-				# don't bother storing common substrings with a single char
-				if len(current_match) > 1:
-					common_substrings.add(current_match)
-				current_match = ''
-				j = 0
-		if len(current_match) > 1:
-			common_substrings.add(current_match)
+				# don't bother storing common substrings with X chars
+				if len(current_match) > MINIMUM_CHARS:
+					if i ==0 or j-cursor == 0 or len(current_match) >= match_length_matrix[(i-1, j-1-cursor)]:
+						common_substrings.add(current_match)
+					match_length_matrix[(i,j-cursor)] = len(current_match)
+					current_match = ''
+					cursor = 0
+		if len(current_match) > MINIMUM_CHARS:
+			if i ==0 or j-cursor == 0 or len(current_match) >= match_length_matrix[(i-1, j-1-cursor)]:
+				common_substrings.add(current_match)
+			match_length_matrix[(i,j-cursor)] = len(current_match)
+	print match_length_matrix
+	print common_substrings
 	return common_substrings
+
+def filter_out_substrings(next_common_substrings):
+    	common_substrings = Set()
+    	for a in next_common_substrings:
+    		is_prefix = False
+    		for b in next_common_substrings:
+    			if b != a:
+    				if b.startswith(a):
+    					is_prefix = True
+    					break
+    		if not is_prefix:
+    			common_substrings.add(a)
+    	return common_substrings
 
 def main():
     args = []
@@ -62,17 +86,7 @@ def main():
     	for s in common_substrings:
     		next_common_substrings.update(get_common_substrings(f.content, s))
 
-    	# Remove prefixes
-    	common_substrings = Set()
-    	for a in next_common_substrings:
-    		is_prefix = False
-    		for b in next_common_substrings:
-    			if b != a:
-    				if b.startswith(a):
-    					is_prefix = True
-    					break
-    		if not is_prefix:
-    			common_substrings.add(a)
+    	common_substrings = next_common_substrings
 
     sorted_common_substrings = sorted(common_substrings, key=lambda t: -len(t))
     print sorted_common_substrings[0]
