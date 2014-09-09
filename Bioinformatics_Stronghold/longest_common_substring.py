@@ -19,6 +19,9 @@ Given: A collection of k (k≤100) DNA strings of length at most 1 kbp each in F
 Return: A longest common substring of the collection. (If multiple solutions exist, you may return any 
 	single solution.)
 
+Runtime: creates the hash set of all possible substrings in n squared, n being the length of one of the inputs 
+Hash lookups take constant time, so intersections across sets of length n squared take n squared in time. 
+Average time: n^2 * m , where n is the average size of an input, and m is the number of inputs. 
 
 """
 
@@ -26,70 +29,26 @@ import fasta
 from sets import Set
 import fileinput
 
-MINIMUM_CHARS = 1
-
-def get_common_substrings(a, b):
-	common_substrings = Set()
-	match_length_matrix = {}
-	for i in range(len(a)):
-		current_match = ''
-		# hold on to the temporary index increment from the comparer char	
-		cursor = 0   
-		for j in range(len(b)):
-			match_length_matrix[(i,j)] = 0
-			if (cursor + i >= len(a)):
-				break
-			x = a[i + cursor]
-			y = b[j]
-			if x == y:
-				current_match += y
-				cursor += 1
-			else:
-				# don't bother storing common substrings with X chars
-				if len(current_match) > MINIMUM_CHARS:
-					if i ==0 or j-cursor == 0 or len(current_match) >= match_length_matrix[(i-1, j-1-cursor)]:
-						common_substrings.add(current_match)
-					match_length_matrix[(i,j-cursor)] = len(current_match)
-					current_match = ''
-					cursor = 0
-		if len(current_match) > MINIMUM_CHARS:
-			if i ==0 or j-cursor == 0 or len(current_match) >= match_length_matrix[(i-1, j-1-cursor)]:
-				common_substrings.add(current_match)
-			match_length_matrix[(i,j-cursor)] = len(current_match)
-	print match_length_matrix
-	print common_substrings
-	return common_substrings
-
-def filter_out_substrings(next_common_substrings):
-    	common_substrings = Set()
-    	for a in next_common_substrings:
-    		is_prefix = False
-    		for b in next_common_substrings:
-    			if b != a:
-    				if b.startswith(a):
-    					is_prefix = True
-    					break
-    		if not is_prefix:
-    			common_substrings.add(a)
-    	return common_substrings
+def permutation_set(string):
+	permutations = Set()
+	for i in range(len(string) -1):
+		for j in range(len(string) - i ):
+			permutations.add(string[i: i + j + 1])
+	return permutations
 
 def main():
     args = []
     for line in fileinput.input():
         args.append(line.rstrip())
     fastas = fasta.parse(args)
-    common_substrings = Set([fastas[0].content])
-
-    # iterate through fastas, compiling and updating a set of common substrings
-    for f in fastas[1:]:
-    	next_common_substrings = Set()
-    	for s in common_substrings:
-    		next_common_substrings.update(get_common_substrings(f.content, s))
-
-    	common_substrings = next_common_substrings
-
-    sorted_common_substrings = sorted(common_substrings, key=lambda t: -len(t))
-    print sorted_common_substrings[0]
+    strings = []
+    for f in fastas:
+    	strings.append(f.content)
+    first = strings[0]
+    intersect_set = permutation_set(first)
+    for s in strings[1:]:
+    	intersect_set = intersect_set & permutation_set(s)
+    print max(intersect_set, key=len)
 
 if __name__ == '__main__':
 	main()
